@@ -1,0 +1,5 @@
+#! /usr/bin/env node
+
+var main = require( '../main' );
+main.parse(process.argv);
+
