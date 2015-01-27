@@ -25,10 +25,15 @@ exports.parse = function (args) {
         return;
     }
     //检查配置和运行环境
-    require('./src/check').init(args);
+    //require('./src/check').init(args);
     
     //业务命令处理入口
-    require('./src/command').init(args);
+    //require('./src/command').init(args);
+    
+    //进入生成器入口
+    var Generator = require('./src/Generator');
+    var gen = new Generator()
+    gen.init(args);
 };
 
 if (module === require.main) {

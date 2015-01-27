@@ -79,10 +79,12 @@ FileOperator.prototype = {
     /*
      * 确保创建了相应的目录
      * @param {string} path
+     * @param {Function} callback
      */
-    insureDir: function (path) {
+    insureDir: function (path, callback) {
         if (!fs.existsSync(path)) {
             fs.mkdirSync(path);
+            callback && callback(true);
         }
     }
 };

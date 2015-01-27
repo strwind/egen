@@ -31,6 +31,7 @@ PathRef.prototype = {
         fileOpr.readFileByArray(target, function(err, dataArr) {
             if (dataArr.indexOf(content) !== -1 
                 || me.container[content]) {
+                callback && callback(true);
                 return;
             }
             me.container[content] = 1;
@@ -42,8 +43,12 @@ PathRef.prototype = {
             }
             dataArr.splice(line, 0, content);
             fs.writeFile(target, dataArr.join('\n'), function (err, data) {
+                if (err) {
+                    callback && callback(false);
+                    return;
+                }
                 console.log('添加路径成功, 在文件%s中第%s行', target, line + 1);
-                callback && callback();
+                callback && callback(true);
             });
         });
     }

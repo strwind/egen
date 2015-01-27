@@ -6,34 +6,14 @@
  */
 var fs = require('fs');
 var path = require('path');
+var u = require('underscore');
 var util = require('./util');
+
 var configPath = path.join(process.cwd(), '/egenConfig/config');
 var config = require(configPath);
 
 var configManager = {
-    /*
-     * 模块的默认任务名字
-     * @type {Array}
-     */
-    defaultModTaskList: ['form', 'list', 'detail'],
-    
-    /*
-     * 获取模块任务集合
-     * @param {string} modName 模块名字
-     * @return {Object} 详细的任务集合
-     */
-    getModTaskCollection: function (modName) {
-        var me = this;
-        var taskCollection = {};
-        this.defaultModTaskList.forEach(function (taskName, index) {
-            var task = me.getModTask(modName, taskName);
-            taskCollection[taskName] = task;
-        });
-        taskCollection.config = me.getModTask(modName);
-        taskCollection.css = me.getModTask(modName);
-        return taskCollection;
-    },
-    
+  
     /*
      * 获取模块默认任务的配置
      * @param {string} modName 模块名字
@@ -49,56 +29,65 @@ var configManager = {
      *          task.tplFileName 生成的html模板文件名, 默认为任务名
      *          task.viewName 生成的html模板内的target名字, 默认和actionName一致
      */
-    getModTask: function (modName, taskName) {
-        var task = {};
-        util.extend(task, this.userInfo);
-        util.extend(task, {
-            'modName': modName,
-            'modNameCapitalize': util.toUpperCase(modName),
-            'createDate': util.getFormatDate()
-        });
-        if (taskName) {
-            var actionName = util.toUpperCase(modName) + util.toUpperCase(taskName);
-            util.extend(task, {
-                'taskName': taskName,
-                'actionName': actionName,
-                'tplFileName': taskName,
-                'viewName': actionName,
-            });
-         }
-        return task;
+    getTaskList: function (args) {
+        var template = JSON.stringify(config.taskList);
+        var map = this.getCommandMap(args);
+        var format = util.format(template, map);
+        var taskList = JSON.parse(format);
+        taskList = this.addPath(taskList);
+        taskList = this.parseCallback(taskList);
+        config.taskList = taskList;
+        return taskList;
     },
     
-    /*
-     * 获取控件默认单个任务的配置
-     * @param {string} ctrName 控件名字
-     * @param {string=} ctrSupName 控件父类名称
-     * @return {Object} task 任务的详细配置
-     *          task.userName 用户名称
-     *          task.email 用户邮箱
-     *          task.createDate 创建日期
-     *          task.ctrName 控件名称
-     *          task.className 控件类名
-     *          task.superClassName 控件的父类名
-     *          task.viewName 模板名，默认为类名
-     *          task.type 控件类的配置，可选，一般是className的小写
-     *          task.cssFileName 生成的css文件名字, 默认和类的小写，
-     *          task.demoFileName 生成的Demo文件名字, 默认和类名一致
-     */
-    getCtrTask: function (ctrName, ctrSupName) {
-        var task = {};
-        util.extend(task, this.userInfo);
-        util.extend(task, {
-            'createDate': util.getFormatDate(),
-            'ctrName': ctrName,
-            'className': ctrName,
-            'superClassName': ctrSupName || 'Control',
-            'viewName': 'UI' + ctrName,
-            'type': ctrName.toLowerCase(), 
-            'cssFileName': 'ui-' + ctrName.toLowerCase(),
-            'demoFileName': 'ui.' + ctrName
+    getCommandMap: function (args) {
+        var map = {};
+        u.each(config.commandMap, function (value, key) {
+            key = /\$\{(.+?)\}/.exec(key)[1];
+            if (/args/.test(value)) {
+                var number = /args(\w+)/.exec(value)[1];
+                map[key] = args[number - 1]
+            }
+            //需要首字母大写的情况
+            else if (/Args/.test(value)) {
+                var number = /Args(\w+)/.exec(value)[1];
+                map[key] = util.toUpperCase(args[number - 1]);
+            }
         });
-        return task;
+        return map;
+    },
+    
+    addPath: function (taskList) {
+        u.each(taskList, function (item, key) {
+            if (u.isObject(item)) {
+                if (item.type === 'folder' || item.type === 'file') {
+                    item.path = item.path || path.join(taskList.path, key);
+                }
+                return this.addPath(item);
+            }
+        }, this);
+        return taskList;
+    },
+    
+    getTplData: function (tplData) {
+        var commonTplData = u.extend({}, config.commonTplData);
+        if (u.isBoolean(commonTplData.createDate) && commonTplData.createDate) {
+            commonTplData.createDate = util.getFormatDate();
+        }
+        return u.extend(commonTplData, tplData);
+    },
+    
+    parseCallback: function (taskList) {
+        u.each(taskList, function (item, key) {
+            if (u.isObject(item)) {
+                return this.parseCallback(item);
+            }
+            if (key === 'callback') {
+                item = item.split('.');
+                taskList[key] = config[item[1]][item[2]];
+            }
+        }, this);
+        return taskList;
     }
 };
 

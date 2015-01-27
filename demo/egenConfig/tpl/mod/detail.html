@@ -1,0 +1,49 @@
+<!-- target:${viewName} -->
+<!-- 以下是布局及样式示例，请按实际修改，class名尽量不要修改，方便统一修改系统样式 -->
+<!-- ModFrame控件包裹的DOM内容就是点击修改弹出的ModFrame框里的内容 -->
+<div ui="type:Form;id:form" class="edit-form">
+	<div class="form-main">
+		<div class="form-block-wrap">
+			<div class="form-block long-td">
+			
+				<div class="form-row">
+					<div class="form-key textright">用户名：</div>
+					<div class="form-value">
+						<div ui="type:ModFrame;id:modUserName;width:400;editText:@modUserName;hideLink:@toHideLink;">
+							<div class="gr-mod-panel hide">
+							    <div class="gr-mod-name-cnt"><input name="userName" type="text"
+								title="用户名" ui="type:TextInput;id:userName;rule:required;"
+								maxlength="20" class="mod-long-text" /> 
+								    <span class="hint validate-info">100字符以内</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-row" id="passwordDiv">
+					<div class="form-key textright">密码：</div>
+					<div class="form-value" id="pwdDiv">
+						<div ui="type:ModFrame;id:modPwd;width:400;editText:;">
+							<div class="gr-mod-panel hide">
+								<div class="gr-mod-name-cnt">
+								    <span>请输入当前密码：</span>
+								    <input type="password" ui="type:TextInput;id:oldPasswd;rule:required;"
+									maxlength="16" class="mod-long-text" /><br />
+								    <span>请输入新的密码：</span>
+								    <input name="password" type="password" ui="type:TextInput;id:newPasswd;rule:required;" maxlength="16"
+									class="mod-long-text" /><br />
+								    <span>请再次输入密码：</span>
+								    <input type="password" ui="type:TextInput;id:password2;rule:required;" maxlength="16"
+									class="mod-long-text" /><br />
+								    <span class="hint validate-info">密码为6~16大小写字母和数字的组合</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+</div>

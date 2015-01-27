@@ -1,0 +1,29 @@
+<!-- target:${viewName} -->
+<!-- 以下是布局及样式示例，请按实际修改，class名尽量不要修改，方便统一修改系统样式 -->
+<div class="list-main">
+    <div class="dn-tab-row">
+        <div ui="type:Tab;id:tab;tabs:@tabConfig;activeIndex:0;skin:dn;" class="dn-tab-ctner">      
+        </div>
+    </div>
+    <div ui="type:Form;id:formSearch;" class="list-search-form">
+        <div class="dn-list-search">
+            <div ui="type:Button;id:create;skin:flatCreate;">新建</div>
+            <div class="seperator"></div>
+            <div name="role" ui="type:ComboBox;id:cbRoles;datasource:*rolesList;width:100;emptyLabelText:所有角色;"></div>
+            <div class="dn-list-search-right">      
+                <div name="keyword" ui="id:search;type:SearchInput;skin:mini;width:184;virtualValue:请输入账户ID或名称;mod:submit;"></div>
+            </div>  
+        </div>
+        <div ui="id:searchInfo;type:SearchInfo;"></div>
+    </div>
+
+    <div class="dn-list-body">
+        <div class="dn-list-operation">
+            <div ui="type:Panel;id:pnlOperation">
+              <div ui="type:Button;id:btnDelete">删除</div>
+            </div>
+        </div>
+    
+        <div ui="type:PagableList;id:list;fields:@fields;select:multi;pageSize:@pageSize;pageNo:@pageNo;orderBy:@orderBy;order:@order;"></div>
+    </div>
+</div>

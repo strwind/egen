@@ -8,7 +8,8 @@
     "repository": "https://github.com/strwind/generator.git",
     "description": "This is a generator of creating the module and the control!",
     "dependencies": {
-        "etpl": "*"
+        "etpl": "*",
+        "underscore": "*"
     },
     "bin": {
         "egen": "./bin/egen-cli"
