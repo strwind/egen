@@ -121,7 +121,7 @@ module.exports = exports = config;
 
 ###Quick Start
 
-##### 生成一个命名为‘demo’的模块
+##### 生成一个命名为**demo**的模块
 
 在项目根目录下运行命令<code>egen demo</code>
 
@@ -132,6 +132,8 @@ module.exports = exports = config;
         -demo.less
     -index.html
 </pre>
+
+
 
 ##### 使用自定义的子命令addcss
 
