@@ -59,7 +59,7 @@ var config = {
                     'type': 'file',
                     'tplFrom': join(tplPath, 'action.less'),
                     'fileReference': {
-                        'path': join(cwd, 'pathRef/main.less'),
+                        'path': join(cwd, 'pathRefTest/main.less'),
                         'content': '@import \'../biz/${moduleName}/css/${moduleName}.less\';',
                         'line': -1
                     }
@@ -95,7 +95,7 @@ var config = {
                 'type': 'file',
                 'tplFrom': join(tplPath, 'config.js'),
                 'fileReference': {
-                    'path': join(cwd, 'pathRef/moduleConfig.js'),
+                    'path': join(cwd, 'pathRefTest/moduleConfig.js'),
                     'content': '    require(\'biz/${moduleName}/config\');',
                     'line': -2
                 }

@@ -30,7 +30,7 @@ FileOperator.prototype = {
     createFile: function (filePath, tpl, parseData, callback) {
         var me = this;
         if (fs.existsSync(filePath)) {
-            console.log("文件已存在，未重新生成：" + filePath);
+            console.log("文件已存在：" + filePath);
             callback(null);
             return;
         }
@@ -92,6 +92,19 @@ FileOperator.prototype = {
                 callback(true);
             }
         });
+    },
+    
+    /*
+     * 确保创建了相应的文件
+     * @param {string} dir
+     * @param {Function} callback
+     */
+    insureFile: function (filePath, callback) {
+        this.insureDir(path.dirname(filePath));
+        if (!fs.existsSync(filePath)) {
+            fs.writeFileSync(filePath, '');
+        }
+        callback && callback();
     },
     
     /**

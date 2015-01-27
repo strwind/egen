@@ -5,6 +5,7 @@
  * @date 2014-10-30 
  */
 var fs = require('fs');
+var path = require('path');
 var fileOpr = require('./FileOperator');
 
 function PathRef() {
@@ -28,6 +29,7 @@ PathRef.prototype = {
      */
     addRef: function (target, content, line, callback) {
         var me = this;
+        fileOpr.insureFile(target);
         fileOpr.readFileByArray(target, function(err, dataArr) {
             if (dataArr.indexOf(content) !== -1 
                 || me.container[content]) {
@@ -47,7 +49,8 @@ PathRef.prototype = {
                     callback && callback(false);
                     return;
                 }
-                console.log('添加路径成功, 在文件%s中第%s行', target, line + 1);
+                var showNum = (line > 0) ? line + 1 : 1;
+                console.log('添加路径成功, 在文件%s中第%s行', target, showNum);
                 callback && callback(true);
             });
         });
