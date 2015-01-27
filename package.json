@@ -5,8 +5,8 @@
         { "name": "yaofeifei", "email": "gzzyyff@gmail.com" }
     ],
     "main": "main.js",
-    "repository": "https://github.com/strwind/generator.git",
-    "description": "This is a generator of creating the module and the control!",
+    "repository": "https://github.com/strwind/egen.git",
+    "description": "This is a generator of creating folders and files",
     "dependencies": {
         "etpl": "*",
         "underscore": "*"
