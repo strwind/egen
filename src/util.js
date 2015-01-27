@@ -1,8 +1,8 @@
 
 /**
  * @file 常用操作util
- * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @author yaofeifei(yaofeifei@baidu.com)
+ * @date 2014-10-30
  */
 
 var util = {
@@ -14,14 +14,13 @@ var util = {
      * @return {Object} ObjA
      */
     extend: function (objA, objB, force) {
-        for(var key in objB) {
+        for (var key in objB) {
             if (!objA.hasOwnProperty(key) || force) {
                 objB[key] && (objA[key] = objB[key]);
             }
         }
         return objA;
     },
-    
     /*
      * 让字符串首字母大写
      * @param {string} str
@@ -30,7 +29,6 @@ var util = {
     toUpperCase: function (str) {
         return str.slice(0, 1).toUpperCase() + str.slice(1);
     },
-    
     /*
      * 让字符串首字母小写
      * @param {string} str
@@ -39,10 +37,9 @@ var util = {
     toLowerCase: function (str) {
         return str.slice(0, 1).toLowerCase() + str.slice(1);
     },
-    
     /*
      * 过滤掉数组尾部的空项
-     * @param {Array} arr
+     * @param {Array} arr 目标数组
      * @return {Array}
      */
     trimArrayEnd: function (arr) {
@@ -56,10 +53,9 @@ var util = {
             }
         }
     },
-    
     /*
-     * 获取格式化后的日期  比如2014-11-03 
-     * @param {Date=} date 日期对象 
+     * 获取格式化后的日期  比如2014-11-03
+     * @param {Date=} date 日期对象
      * @return {string}
      */
     getFormatDate: function (date) {
@@ -76,10 +72,9 @@ var util = {
         }
         return year + '-' + month + '-' + day;
     },
-    
     /*
      * 去除引号
-     * @param {string} str 
+     * @param {string} str 字符串
      * @return {string} str
      */
     clearQuotes: function (str) {
@@ -89,7 +84,6 @@ var util = {
         var re = /[''""]/g;
         return str.replace(re, '');
     },
-    
     /**
      * 字符串格式化
      *
@@ -103,11 +97,9 @@ var util = {
         if (!template) {
             return '';
         }
-
         if (data == null) {
             return template;
         }
-
         return template.replace(
             /\$\{(.+?)\}/g,
             function (match, key) {
@@ -120,6 +112,5 @@ var util = {
             }
         );
     }
-    
 };
 module.exports = exports = util;

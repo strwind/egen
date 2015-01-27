@@ -1,8 +1,8 @@
 
 /**
  * @file 文件操作类
- * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @author yaofeifei(yaofeifei@baidu.com)
+ * @date 2014-10-30
  */
 var fs = require('fs');
 var path = require('path');
@@ -21,16 +21,16 @@ function FileOperator() {
 FileOperator.prototype = {
     /*
      * 生成单个文件
-     * @param {string} filePath 写入目标文件路径 
-     * @param {string} tpl 模板文件路径 
-     * @param {string} parseData 替换模板中变量的数据对象 
-     * @param {Function} callback 回调函数 
+     * @param {string} filePath 写入目标文件路径
+     * @param {string} tpl 模板文件路径
+     * @param {string} parseData 替换模板中变量的数据对象
+     * @param {Function} callback 回调函数
      * @public
      */
     createFile: function (filePath, tpl, parseData, callback) {
         var me = this;
         if (fs.existsSync(filePath)) {
-            console.log("文件已存在：" + filePath);
+            console.log('文件已存在：' + filePath);
             callback(null);
             return;
         }
@@ -49,14 +49,12 @@ FileOperator.prototype = {
             fs.writeFile(filePath, content, function (err, data) {
                 if (err) {
                     throw err;
-                    callback(err);
                 }
-                console.log("生成文件成功： " + filePath);
+                console.log('生成文件成功： ' + filePath);
                 callback(null);
             });
         });
     },
-    
     /*
      * 读取一个文件，以数组的形式返回，文件中的每一行为数组的一项
      * @param {string} filePath 文件路径
@@ -76,7 +74,6 @@ FileOperator.prototype = {
             callback(null, arr);
         });
     },
-    
     /*
      * 确保创建了相应的目录
      * @param {string} dir
@@ -93,7 +90,6 @@ FileOperator.prototype = {
             }
         });
     },
-    
     /*
      * 确保创建了相应的文件
      * @param {string} dir
@@ -106,7 +102,6 @@ FileOperator.prototype = {
         }
         callback && callback();
     },
-    
     /**
      * 获取深度路径list
      * @param {string} dir 路径

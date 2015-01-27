@@ -33,7 +33,7 @@
     <li>config.js  ———模块配置文件</li>
     <li>tpl   ———模板文件夹</li>
 </ul>
-<p>**示例：** <code>https://github.com/strwind/egen/demo/helloword</code> </p>
+<p>**示例：** <code>https://github.com/strwind/egen/tree/master/demo/helloword</code> </p>
 
 #####config配置文件
 <pre>

@@ -1,8 +1,8 @@
 
 /**
  * @file 生成模板入口
- * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @author yaofeifei(yaofeifei@baidu.com)
+ * @date 2014-10-30
  */
 
 /**
@@ -25,10 +25,9 @@ exports.parse = function (args) {
         help.dumpVersion();
         return;
     }
-    //检查配置和运行环境
+    // 检查配置和运行环境
     require('./src/check').init(args);
-    
-    //进入生成器入口
+    // 生成器入口
     require('./src/generator').init(args);
 };
 

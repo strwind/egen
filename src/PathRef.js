@@ -1,8 +1,8 @@
 
 /**
  * @file 给新模板添加路径引用类
- * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @author yaofeifei(yaofeifei@baidu.com)
+ * @date 2014-10-30
  */
 var fs = require('fs');
 var path = require('path');
@@ -16,9 +16,7 @@ function PathRef() {
     this.container = {};
 }
 
-
 PathRef.prototype = {
-    
     /*
      * 添加文件的引用路径
      * @param {string} target 目标路径
@@ -30,8 +28,8 @@ PathRef.prototype = {
     addRef: function (target, content, line, callback) {
         var me = this;
         fileOpr.insureFile(target);
-        fileOpr.readFileByArray(target, function(err, dataArr) {
-            if (dataArr.indexOf(content) !== -1 
+        fileOpr.readFileByArray(target, function (err, dataArr) {
+            if (dataArr.indexOf(content) !== -1
                 || me.container[content]) {
                 callback && callback(true);
                 return;

@@ -1,8 +1,8 @@
 
 /**
  * @file 给新模板添加路径引用类
- * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @author yaofeifei(yaofeifei@baidu.com)
+ * @date 2014-10-30
  */
 var fs = require('fs');
 var path = require('path');
@@ -16,25 +16,23 @@ var reSubCommand = /^-(\w+)\s*/;
 var configManager = {
     /**
      * 子命令列表
-     * @type {Array} 
+     * @type {Array}
      * @public
      */
     subCommandList: [],
-    
     /**
      * 配置初始入口
-     * @param {Array} args参数数组
-     * @public 
+     * @param {Array} args 参数数组
+     * @public
      */
     init: function (args) {
         this.args = args;
         this.configFormat();
         this.initSubCommandMap();
     },
-    
     /**
      * 配置中的变量替换
-     * @public 
+     * @public
      */
     configFormat: function () {
         var map = this.getCommandMap();
@@ -45,7 +43,7 @@ var configManager = {
     },
     /**
      * 初始化子命令映射
-     * @public 
+     * @public
      */
     initSubCommandMap: function () {
         config.subCommandMap = {};
@@ -59,12 +57,11 @@ var configManager = {
             config.subCommandMap[sub] = this.getItemByAttribute('subCommand', sub, config.taskList);
         }, this);
     },
-    
     /**
      * 替换变量处理函数
      * @param {Object|Array} source 数据源
      * @param {Object} data 替换的字典
-     * @return {Object|Array} 替换变量后的对象 
+     * @return {Object|Array} 替换变量后的对象
      */
     replace: function (source, data) {
         var template = JSON.stringify(source);
@@ -93,10 +90,9 @@ var configManager = {
         }, this);
         return target;
     },
-    
     /**
      * 判断是否有子命令
-     * @return {boolean} 
+     * @return {boolean}
      */
     hasSubCommand: function () {
         var status = false;
@@ -107,7 +103,6 @@ var configManager = {
         });
         return status;
     },
-    
     /**
      * 获取生成任务列表
      * @return {Array}
@@ -115,7 +110,6 @@ var configManager = {
     getTaskList: function () {
         return config.taskList;
     },
-    
     /**
      * 获取子命令任务列表
      * @return {Array}
@@ -127,10 +121,9 @@ var configManager = {
         });
         return list;
     },
-    
     /**
      * 获取命令的map数据
-     * @return {Object} 
+     * @return {Object}
      */
     getCommandMap: function () {
         var map = {};
@@ -147,9 +140,9 @@ var configManager = {
             key = /\$\{(.+?)\}/.exec(key)[1];
             if (/args/.test(value)) {
                 var number = /args(\w+)/.exec(value)[1];
-                map[key] = args[number - 1]
+                map[key] = args[number - 1];
             }
-            //需要首字母大写的情况
+            // 需要首字母大写的情况
             else if (/Args/.test(value)) {
                 var number = /Args(\w+)/.exec(value)[1];
                 map[key] = util.toUpperCase(args[number - 1]);
@@ -157,7 +150,6 @@ var configManager = {
         });
         return map;
     },
-    
     /**
      * 添加path属性,深度添加
      * @param {Object} task 需要添加path的对象
@@ -173,10 +165,9 @@ var configManager = {
         }, this);
         return task;
     },
-    
     /**
      * 获取模板数据
-     * @param {Object} tplData
+     * @param {Object} tplData 私有模板替换变量数据
      * @return {Object}
      */
     getTplData: function (tplData) {
@@ -186,10 +177,9 @@ var configManager = {
         }
         return u.extend(commonTplData, tplData);
     },
-    
     /**
      * 解析callback, 从字符串改为映射的函数
-     * @param {Array} taskList
+     * @param {Array} taskList 任务列表
      * @return {Array}
      */
     parseCallback: function (taskList) {

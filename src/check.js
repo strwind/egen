@@ -1,17 +1,16 @@
 
 /**
  * @file 检查相关配置
- * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @author yaofeifei(yaofeifei@baidu.com)
+ * @date 2014-10-30
  */
 var fs = require('fs');
 var path = require('path');
 
-//命令运行路径
+// 命令运行路径
 var currentPath = process.cwd();
 
 var check = {
-    
     /**
      * 检查模块运行入口
      * @param {Array} args 命令数组
@@ -23,7 +22,7 @@ var check = {
     },
     /**
      * 是否有配置文件夹
-     * @return {boolean} 
+     * @return {boolean}
      */
     hasEgenConfig: function () {
         var egenConfigPath = path.join(currentPath, 'egenConfig');
