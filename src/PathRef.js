@@ -5,8 +5,8 @@
  * @date 2014-10-30 
  */
 var fs = require('fs');
-var FileOperator = require('./FileOperator');
-var fileOpr = new FileOperator();
+var fileOpr = require('./FileOperator');
+
 function PathRef() {
     /*
      * 添加path的容器
@@ -53,5 +53,5 @@ PathRef.prototype = {
         });
     }
 };
-
-module.exports = exports = PathRef;
+var pathRef = new PathRef();
+module.exports = exports = pathRef;

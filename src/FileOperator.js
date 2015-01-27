@@ -5,9 +5,10 @@
  * @date 2014-10-30 
  */
 var fs = require('fs');
+var path = require('path');
+var u = require('underscore');
 var util = require('./util');
-var TplParser = require('./TplParser');
-var tplParser = new TplParser();
+var tplParser = require('./tplParser');
 
 function FileOperator() {
     /*
@@ -78,15 +79,37 @@ FileOperator.prototype = {
     
     /*
      * 确保创建了相应的目录
-     * @param {string} path
+     * @param {string} dir
      * @param {Function} callback
      */
-    insureDir: function (path, callback) {
-        if (!fs.existsSync(path)) {
-            fs.mkdirSync(path);
-            callback && callback(true);
+    insureDir: function (dir, callback) {
+        var dirList = this.getDeepDirList(dir);
+        u.each(dirList, function (single, index) {
+            if (!fs.existsSync(single)) {
+                fs.mkdirSync(single);
+            }
+            if (index >= dirList.length - 1 && callback) {
+                callback(true);
+            }
+        });
+    },
+    
+    /**
+     * 获取深度路径list
+     * @param {string} dir 路径
+     * @param {Array=} list 路径列表
+     * @return {Array} 路径列表
+     */
+    getDeepDirList: function (dir, list) {
+        var list = list || [];
+        list.unshift(dir);
+        var pre = path.dirname(dir);
+        if (pre !== dir) {
+            list.concat(this.getDeepDirList(pre, list));
         }
+        return list;
     }
 };
 
-module.exports = exports = FileOperator;
+var fileOperator = new FileOperator();
+module.exports = exports = fileOperator;

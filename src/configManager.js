@@ -11,37 +11,116 @@ var util = require('./util');
 
 var configPath = path.join(process.cwd(), '/egenConfig/config');
 var config = require(configPath);
+var reSubCommand = /^-(\w+)\s*/;
 
 var configManager = {
-  
-    /*
-     * 获取模块默认任务的配置
-     * @param {string} modName 模块名字
-     * @param {string=} taskName 任务名字
-     * @return {Object} task 任务的详细配置
-     *          task.userName 用户名称
-     *          task.email 用户邮箱
-     *          task.createDate 创建日期
-     *          task.modName 模块名称
-     *          task.modNameCapitalize 首字母大写的模块名称
-     *          task.taskName 任务名称
-     *          task.actionName 生成的action的名称
-     *          task.tplFileName 生成的html模板文件名, 默认为任务名
-     *          task.viewName 生成的html模板内的target名字, 默认和actionName一致
+    /**
+     * 子命令列表
+     * @type {Array} 
+     * @public
      */
-    getTaskList: function (args) {
-        var template = JSON.stringify(config.taskList);
-        var map = this.getCommandMap(args);
-        var format = util.format(template, map);
-        var taskList = JSON.parse(format);
-        taskList = this.addPath(taskList);
-        taskList = this.parseCallback(taskList);
-        config.taskList = taskList;
-        return taskList;
+    subCommandList: [],
+    
+    /**
+     * 配置初始入口
+     * @param {Array} args参数数组
+     * @public 
+     */
+    init: function (args) {
+        this.args = args;
+        this.configFormat();
+        this.initSubCommandMap();
     },
     
-    getCommandMap: function (args) {
+    /**
+     * 配置中的变量替换
+     * @public 
+     */
+    configFormat: function () {
+        var map = this.getCommandMap();
+        config.taskList = this.replace(config.taskList, map);
+        config.taskList = this.addPath(config.taskList);
+        config.taskList = this.parseCallback(config.taskList);
+        config.commonTplData = this.replace(config.commonTplData, map);
+    },
+    /**
+     * 初始化子命令映射
+     * @public 
+     */
+    initSubCommandMap: function () {
+        config.subCommandMap = {};
+        u.each(this.args, function (arg, index) {
+            var exec = reSubCommand.exec(arg);
+            if (!exec) {
+                return;
+            }
+            var sub = exec[1];
+            this.subCommandList.push(sub);
+            config.subCommandMap[sub] = this.getItemByAttribute('subCommand', sub, config.taskList);
+        }, this);
+    },
+    
+    replace: function (target, map) {
+        var template = JSON.stringify(target);
+        var format = util.format(template, map);
+        return JSON.parse(format);
+    },
+    
+    getItemByAttribute: function (key, value, source) {
+        var target;
+        u.each(source, function (item, index) {
+            if (!u.isObject(item) && !u.isArray(item)) {
+                return;
+            }
+            if (item[key] === value) {
+                target = item;
+            }
+            else if (!target) {
+                target = this.getItemByAttribute(key, value, item);
+            }
+        }, this);
+        return target;
+    },
+    
+    isSubCommand: function () {
+        var status = false;
+        u.each(this.args, function (arg, index) {
+            if (reSubCommand.test(arg)) {
+                status = true;
+            }
+        });
+        return status;
+    },
+    
+    /*
+     * 获取生成任务列表
+     */
+    getTaskList: function () {
+        return config.taskList;
+    },
+    
+    /*
+     * 获取子命令任务列表
+     */
+    getSubCommandTaskList: function () {
+        var list = [];
+        u.each(this.subCommandList, function (sub, index) {
+            list.push(config.subCommandMap[sub]);
+        });
+        return list;
+    },
+    
+    getCommandMap: function () {
         var map = {};
+        var args = u.extend([], this.args);
+        u.each(args, function (arg, index) {
+            if (reSubCommand.test(arg)) {
+                args = args.slice(1);
+            }
+        });
+        if (!args.length) {
+            return map;
+        }
         u.each(config.commandMap, function (value, key) {
             key = /\$\{(.+?)\}/.exec(key)[1];
             if (/args/.test(value)) {
@@ -57,16 +136,16 @@ var configManager = {
         return map;
     },
     
-    addPath: function (taskList) {
-        u.each(taskList, function (item, key) {
+    addPath: function (task) {
+        u.each(task, function (item, key) {
             if (u.isObject(item)) {
                 if (item.type === 'folder' || item.type === 'file') {
-                    item.path = item.path || path.join(taskList.path, key);
+                    item.path = item.path || path.join(task.path, key);
                 }
                 return this.addPath(item);
             }
         }, this);
-        return taskList;
+        return task;
     },
     
     getTplData: function (tplData) {

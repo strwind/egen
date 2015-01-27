@@ -11,7 +11,9 @@ etpl.config({
     commandClose: '%>'
 });
 
-function TplParser () {}
+function TplParser () {
+    
+}
 
 TplParser.prototype = {
     compile: function (source, data) {
@@ -19,5 +21,5 @@ TplParser.prototype = {
         return template(data);
     }
 };
-
-module.exports = exports = TplParser;
+var tplParser = new TplParser();
+module.exports = exports = tplParser;
