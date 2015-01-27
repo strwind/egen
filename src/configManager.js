@@ -60,12 +60,24 @@ var configManager = {
         }, this);
     },
     
-    replace: function (target, map) {
-        var template = JSON.stringify(target);
-        var format = util.format(template, map);
+    /**
+     * 替换变量处理函数
+     * @param {Object|Array} source 数据源
+     * @param {Object} data 替换的字典
+     * @return {Object|Array} 替换变量后的对象 
+     */
+    replace: function (source, data) {
+        var template = JSON.stringify(source);
+        var format = util.format(template, data);
         return JSON.parse(format);
     },
-    
+    /**
+     * 根据属性查找对象
+     * @param {string} key 键
+     * @param {string|number|boolean} value 值
+     * @param {Object} source 数据源
+     * @return {Object} 查找到的对象
+     */
     getItemByAttribute: function (key, value, source) {
         var target;
         u.each(source, function (item, index) {
@@ -82,7 +94,11 @@ var configManager = {
         return target;
     },
     
-    isSubCommand: function () {
+    /**
+     * 判断是否有子命令
+     * @return {boolean} 
+     */
+    hasSubCommand: function () {
         var status = false;
         u.each(this.args, function (arg, index) {
             if (reSubCommand.test(arg)) {
@@ -92,15 +108,17 @@ var configManager = {
         return status;
     },
     
-    /*
+    /**
      * 获取生成任务列表
+     * @return {Array}
      */
     getTaskList: function () {
         return config.taskList;
     },
     
-    /*
+    /**
      * 获取子命令任务列表
+     * @return {Array}
      */
     getSubCommandTaskList: function () {
         var list = [];
@@ -110,6 +128,10 @@ var configManager = {
         return list;
     },
     
+    /**
+     * 获取命令的map数据
+     * @return {Object} 
+     */
     getCommandMap: function () {
         var map = {};
         var args = u.extend([], this.args);
@@ -136,6 +158,10 @@ var configManager = {
         return map;
     },
     
+    /**
+     * 添加path属性,深度添加
+     * @param {Object} task 需要添加path的对象
+     */
     addPath: function (task) {
         u.each(task, function (item, key) {
             if (u.isObject(item)) {
@@ -148,6 +174,11 @@ var configManager = {
         return task;
     },
     
+    /**
+     * 获取模板数据
+     * @param {Object} tplData
+     * @return {Object}
+     */
     getTplData: function (tplData) {
         var commonTplData = u.extend({}, config.commonTplData);
         if (u.isBoolean(commonTplData.createDate) && commonTplData.createDate) {
@@ -156,6 +187,11 @@ var configManager = {
         return u.extend(commonTplData, tplData);
     },
     
+    /**
+     * 解析callback, 从字符串改为映射的函数
+     * @param {Array} taskList
+     * @return {Array}
+     */
     parseCallback: function (taskList) {
         u.each(taskList, function (item, key) {
             if (u.isObject(item)) {
