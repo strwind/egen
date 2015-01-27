@@ -1,6 +1,6 @@
 {
     "name": "egen",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "contributors": [
         { "name": "yaofeifei", "email": "gzzyyff@gmail.com" }
     ],
@@ -17,7 +17,7 @@
     "keywords": [
         "generator",
         "egen",
-        "gen"
+        "easy generator"
     ],
     "author": "yaofeifei",
     "license": "MTC"

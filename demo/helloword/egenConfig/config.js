@@ -7,7 +7,7 @@
 var path = require('path');
 var cwd = process.cwd();
 var join = path.join;
-var tplPath = join(cwd, 'egenConfig/tpl/mod');
+var tplPath = join(cwd, 'egenConfig/tpl');
 
 var config = {
     /**
@@ -27,8 +27,8 @@ var config = {
         'userName': 'yaofeifei',
         'email': 'yaofeifei@baidu.com',
         'createDate': true,
-        'modName': '${moduleName}',
-        'modNameCapitalize': '${ModuleName}'
+        'moduleName': '${moduleName}',
+        'moduleNameCapitalize': '${ModuleName}'
     },
     
     /**
@@ -48,100 +48,26 @@ var config = {
     'taskList': [
         //模块文件夹配置
         {
-            'path': join(cwd, 'src/${moduleName}'),
+            'path': join(cwd, '${moduleName}'),
             'type': 'folder',
-            'subCommand': 'addmod',
+            // html配置
+            'index.html': {
+                'type': 'file',
+                'tplFrom': join(tplPath, 'tpl.html'),
+                'tplData': {
+                    'cssPath': 'css/${moduleName}.css'
+                },
+                'callback': 'config.handlers.success'
+            },
             // css文件夹配置
             'css': {
                 'type': 'folder',
                 'subCommand': 'addcss',
-                '${moduleName}.less': {
+                '${moduleName}.css': {
                     'type': 'file',
-                    'tplFrom': join(tplPath, 'action.less'),
-                    'fileReference': {
-                        'path': join(cwd, 'pathRef/main.less'),
-                        'content': '@import \'../biz/${moduleName}/css/${moduleName}.less\';',
-                        'line': -1
-                    }
+                    'tplFrom': join(tplPath, 'css.css')
                 }
             },
-             // tpl文件夹配置
-            'tpl': {
-                'type': 'folder',
-                'detail.tpl.html': {
-                    'type': 'file',
-                    'tplFrom': join(tplPath, 'detail.html'),
-                    'tplData': {
-                        'viewName': '${ModuleName}Detail'
-                    }
-                },
-                'form.tpl.html': {
-                    'type': 'file',
-                    'tplFrom': join(tplPath, 'form.html'),
-                    'tplData': {
-                        'viewName': '${ModuleName}Form'
-                    }
-                },
-                'list.tpl.html': {
-                    'type': 'file',
-                    'tplFrom': join(tplPath, 'list.html'),
-                    'tplData': {
-                        'viewName': '${ModuleName}List'
-                    }
-                }
-            },
-           // config配置
-            'config.js': {
-                'type': 'file',
-                'tplFrom': join(tplPath, 'config.js'),
-                'fileReference': {
-                    'path': join(cwd, 'pathRef/moduleConfig.js'),
-                    'content': '    require(\'biz/${moduleName}/config\');',
-                    'line': -2
-                }
-            },
-            // DetailAction配置
-            '${ModuleName}Detail.js': {
-                'type': 'file',
-                'tplFrom': join(tplPath, 'detail.js'),
-                'tplData': {
-                    'actionName': '${ModuleName}Detail',
-                    'viewName': '${ModuleName}Detail',
-                    'tplFileName': 'detail'
-                }
-            },
-            // FormAction配置
-            '${ModuleName}Form.js': {
-                'type': 'file',
-                'tplFrom': join(tplPath, 'form.js'),
-                'tplData': {
-                    'actionName': '${ModuleName}Form',
-                    'viewName': '${ModuleName}Form',
-                    'tplFileName': 'form'
-                }
-            },
-            // ListAction配置
-            '${ModuleName}List.js': {
-                'type': 'file',
-                'tplFrom': join(tplPath, 'list.js'),
-                'tplData': {
-                    'actionName': '${ModuleName}List',
-                    'viewName': '${ModuleName}List',
-                    'tplFileName': 'list'
-                }
-            },
-        },
-        
-        //mock文件配置
-        {
-            'path': join(cwd, 'mockup/${moduleName}'),
-            'type': 'folder',
-            // list页面mock数据
-            'list.json': {
-                'type': 'file',
-                'tplFrom': join(tplPath, 'list.json')
-             },
-            'callback': 'config.handlers.success'
         }
     ],
     

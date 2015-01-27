@@ -1,172 +1,146 @@
 
-#Easy generator —— 百度DSP 脚手架工具
+#EGEN —— Easy generator
 该工具能让我们从开发时繁琐的文件创建、引用、配置中解放人力，把更多的精力关注到业务逻辑上
 
-### 安装      
-<code>npm install -g egen</code>
-
-###命令行说明
-<p>中括号包括起来的为参数，括号中以等号结尾的为可选参数</p>
-<p>参数在命令行中输入时，<b>有字母大写时需要用引号包起来</b></p>
-<p>[模块名]、[控件名]、[父类名]为自定义,[任务名]为form、list、detail中的一项</p>
-
-### 生成模块命令       
-<p><code>egen mod [模块名]</code>    --生成模块所有所需文件</p>
-
-#####二级子命令
-<p><code>egen mod addtask [模块名] [任务名]</code>    --生成模块指定任务的所有文件</p>
-<p><code>egen mod addjs [模块名] [任务名]</code>    --生成模块所需的js文件</p>
-<p><code>egen mod addcss [模块名]</code>    --生成模块所需的less文件</p>
-<p><code>egen mod addhtml [模块名] [任务名]</code>    --生成模块所需的tpl文件</p>
-<p><code>egen mod addconfig [模块名]</code>    --生成模块所需的config文件</p>
-
-
-### 生成UI控件命令  
-<p><code>egen ui [控件名] [父类名=]</code>    --生成控件所有所需文件</p>
-
-#####二级子命令
-<p><code>egen ui addjs [控件名] [父类名=]</code>    --生成控件所需的js文件</p>
-<p><code>egen ui addcss [控件名] [父类名=]</code>    --生成控件所需的less文件</p>
-<p><code>egen ui addhtml [控件名] [父类名=]</code>    --生成控件所需的tpl文件</p>
-<p><code>egen ui adddemo [控件名] [父类名=]</code>    --生成控件所需的demo文件</p>
-
-
-###详细说明
-生成模块和UI控件其实做了下面三件事情
+###该工具主要专注于下面三件事情
 <ol>
-    <li>生成模块或控件所需要的文件，包含所需的tpl、css、js、config、demo 几类文件</li>
-    <li>解析生成的模板文件</li>
+    <li>在目标目录生成指定文件</li>
+    <li>解析生成的文件，进行变量替换</li>
     <li>添加生成文件的引用路径</li>
 </ol>
 
+###使用简单：仅需三步
+<ol>
+    <li>项目根目录下创建egenConfig文件夹</li>
+    <li>egenConfig中配置config.js文件和所需模板文件</li>
+    <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量</li>
+</ol>
+
+###灵活性高，支持自定义子命令
+<ol>
+    <li>轻松配置，一劳永逸</li>
+    <li>适用于大多数项目，并非局限于前端</li>
+    <li>支持自定义子命令，可对生成列表分开控制</li>
+</ol>
+
+##使用简介
+### 安装      
+<code>npm install -g egen</code>
+
 ###工具配置
-<p>**配置示例：** <code>https://github.com/strwind/egenConfig</code></P>
 工具的配置文件在项目的根目录下**egenConfig**文件夹下面, 这个文件夹下需要自己去和写配置文件和模板文件
 <ul>
     <li>config.js  ———模块配置文件</li>
     <li>tpl   ———模板文件夹</li>
 </ul>
+<p>**示例：** <code>https://github.com/strwind/egen/demo/helloword</code> </p>
 
 #####config配置文件
 <pre>
 var path = require('path');
 var cwd = process.cwd();
 var join = path.join;
+var tplPath = join(cwd, 'egenConfig/tpl');
+
 var config = {
-    
-    /*
-     * 用户信息配置
-     * userName 用户姓名
-     * email 用户邮箱
+    /**
+     * 命令变量映射（可选）
+     * args1 代表egen命令后的第一个参数 ,args2代表第二个，以此类推 
+     * Args1 代表第一个参数的第一个字母大写转化， 以此类推
      */
-    'userInfo': {
-        "userName": "yaofeifei",
-        "email": "yaofeifei@baidu.com"
+    'commandMap': {
+        '${moduleName}': 'args1',
+        '${ModuleName}': 'Args1'
     },
     
-    /*
-     * 模块配置
-     * bizPath 生成模块代码的路径
-     * tplPath 模块的模板所在路径
-     * cssRefTargetPath 模块的css文件需要添加引用的路径
-     * configRefTargetPath 模块的config文件需要添加的引用路径
+    /**
+     * 模板变量替换字典（可选）
      */
-    'module': {
-        'bizPath': join(cwd, 'src/biz'),
-        'tplPath': join(cwd, 'egenConfig/tpl/mod'),
-        'cssRefTargetPath': join(cwd, 'src/css/main.less'),
-        'configRefTargetPath': join(cwd, 'src/biz/moduleConfig.js')
+    'commonTplData': {
+        'userName': 'yaofeifei',
+        'email': 'yaofeifei@baidu.com',
+        'createDate': true,
+        'moduleName': '${moduleName}',
+        'moduleNameCapitalize': '${ModuleName}'
     },
     
-    /*
-     * 控件配置
-     * bizPath 生成控件代码的路径
-     * tplPath 控件的模板所在路径
-     * cssRefTargetPath 控件的css文件需要添加引用的路径
-     * demoPath 控件demo生成的路径
-     * demoRefTargetPath 控件demo导航的引用路径
+    /**
+     * 生成任务list
+     * 每个有type属性的对象， key名即文件名
+     * @type {string} path： 文件路径
+     * @type {string} type：文件类型
+     * @type {string} subCommand：子命令
+     * @type {string} tplForm: 模板路径
+     * @type {Object} fileReference: 文件引用信息
+     * @type {string} fileReference.path： 文件引用路径
+     * @type {string} fileReference.content： 文件引用的内容
+     * @type {string} fileReference.line： 文件引用的行号
+     * @type {Object} tplData：私有模板配置数据
+     * @type {Function} callback: 回调函数，这里只配置函数的位置，具体的函数放在handlers中
      */
-    'control': {
-        'bizPath': join(cwd, 'src/ui'),
-        'tplPath': join(cwd, 'egenConfig/tpl/ui'),
-        'cssRefTargetPath': join(cwd, 'src/ui/css/ui-all.less'),
-        'demoPath': join(cwd, 'test/ui/demo'),
-        'demoRefTargetPath': join(cwd, 'test/ui/demo/index_nav.html')
+    'taskList': [
+        //模块文件夹配置
+        {
+            'path': join(cwd, '${moduleName}'),
+            'type': 'folder',
+            // html配置
+            'index.html': {
+                'type': 'file',
+                'tplFrom': join(tplPath, 'tpl.html'),
+                'tplData': {
+                    'cssPath': 'css/${moduleName}.css'
+                },
+                'callback': 'config.handlers.success'
+            },
+            // css文件夹配置
+            'css': {
+                'type': 'folder',
+                'subCommand': 'addcss',
+                '${moduleName}.css': {
+                    'type': 'file',
+                    'tplFrom': join(tplPath, 'css.css')
+                }
+            },
+        }
+    ],
+    
+    /**
+     * 处理函数集合（可选）
+     */
+    'handlers': {
+        'success': function (status) {
+            if (status) {
+                console.log('good job!');
+            }
+        }
     }
 };
 
 module.exports = exports = config;
 </pre>
 
-#####模板
-模板文件在**tpl**文件夹下面,模板内容有待补充
-<ul>
-    <li>mod  ———模块的模板文件夹</li>
-    <li>ui   ———UI控件的模板文件夹</li>
-</ul>
-
 ###Quick Start
 
 ##### 生成一个命名为‘demo’的模块
 
-在项目根目录下运行命令<code>egen mod demo</code>
+在项目根目录下运行命令<code>egen demo</code>
 
 **result:**
-
-在目录**src/biz**下将会生成我们所需的开发模块文件,每个文件中已经写好了代码结构和常用方法
 <pre>
 -demo
     -css
         -demo.less
-    -tpl
-        -form.tpl.html
-        -list.tpl.html
-        -detail.tpl.html
-    -config.js
-    -DemoForm.js
-    -DemoList.js
-    -DemoDetail.js
+    -index.html
 </pre>
 
-<p>demo.css成功在main.css中添加了应用路径，引用语句为<code>@import '../biz/demo/css/demo.less';</code></p>
-<p>config.js成功在moduleConfig.js中添加了应用路径，引用语句为<code>require('biz/demo/config');</code></p>
+##### 使用自定义的子命令addcss
 
-浏览器中打开<code>http://dsptest.baidu.com:8848/main.html#/demo/form </code>即可看到写好的模块
-
-
-##### 生成一个命名为‘Hello’的控件
-
-在项目根目录下运行命令<code>egen ui 'Hello' 'Label'</code>
+在项目根目录下运行命令<code>egen -addcss demo2</code>
 
 **result:**
-
-在目录**src/ui**下将会生成我们所需的开发控件文件,该控件继承Label控件,每个文件中已经写好了代码结构和常用方法
 <pre>
--ui
+-demo2
     -css
-        -ui-hello.less
-    -tpl
-        -Hello.html
-    -Hello.js
+        -demo2.less
 </pre>
-
-在目录**test/ui/demo**下将会生成我们所开发控件的DEMO文件,每个文件中已经写好了代码结构和常用方法
-<pre>
--demo
-    -ui.Hello.html
-</pre>
-
-
-<p>ui-hello.less成功在ui-all.less中添加了应用路径，引用语句为<code>@import './ui-hello.less';</code></p>
-<p>ui.Hello.html成功在index_nav.html中添加了导航
-
-浏览器中打开<code>http://dsptest.baidu.com:8080/test/ui/demo/ui.Hello.html </code>即可看到写好的控件demo
-
-
-###TODO
-<ol>
-    <li>mock文件的生成</li>
-    <li>集成到edp</li>
-    <li>做成公共通用工具, 假如每个项目团队的开发目录、命令规则、文件引用等方式不统一，预计会需要大量的配置</li>
-</ol>
 

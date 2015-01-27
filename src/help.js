@@ -16,7 +16,7 @@ var help = {
            '使用仅需三步：',
            '    1、项目根目录下创建egenConfig文件夹',
            '    2、egenConfig中配置config.js文件和所需模板文件',
-           '    3、根目录下运行egen xxx xxx',
+           '    3、根目录下运行egen xxx',
            '',
            '详情可参考：https://github.com/strwind/egen/demo/egenConfig'
            
