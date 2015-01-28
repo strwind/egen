@@ -11,7 +11,7 @@ var help = {
     defaultInfo: function () {
         var content = [
             '',
-            'egen -- Easy generator',
+            'egen -- easy generator',
             '',
             '使用仅需三步：',
             '    1、项目根目录下创建egenConfig文件夹',

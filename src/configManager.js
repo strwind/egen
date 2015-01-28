@@ -11,7 +11,7 @@ var util = require('./util');
 
 var configPath = path.join(process.cwd(), '/egenConfig/config');
 var config = require(configPath);
-var reSubCommand = /^-(\w+)\s*/;
+var reSubCommand = /^-{1,2}(\w+)\s*/;
 
 var configManager = {
     /**

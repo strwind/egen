@@ -53,6 +53,7 @@ var config = {
             // html配置
             'index.html': {
                 'type': 'file',
+                'subCommand': 'addhtml',
                 'tplFrom': join(tplPath, 'tpl.html'),
                 'tplData': {
                     'cssPath': 'css/${moduleName}.css'

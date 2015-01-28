@@ -46,6 +46,7 @@ FileOperator.prototype = {
                 throw err;
             }
             content = tplParser.compile(content, parseData);
+            me.insureFile(filePath);
             fs.writeFile(filePath, content, function (err, data) {
                 if (err) {
                     throw err;

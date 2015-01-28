@@ -1,8 +1,8 @@
 
 #EGEN —— easy generator
-该工具能让我们从开发时繁琐的文件创建、引用、配置中解放人力，把更多的精力关注到业务逻辑上
+egen能让我们从开发时繁琐的文件创建、引用、初始化代码中解放人力，把更多的精力关注到业务逻辑上
 
-###该工具主要专注于下面三件事情
+###主要专注于下面三件事情
 <ol>
     <li>在目标目录生成指定文件</li>
     <li>解析生成的文件，进行变量替换</li>
@@ -16,11 +16,11 @@
     <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量，一般为模块名</li>
 </ol>
 
-###灵活性高，支持自定义子命令
+###使用特点：
 <ol>
-    <li>轻松配置，一劳永逸</li>
-    <li>适用于大多数项目，并非局限于前端</li>
-    <li>支持自定义子命令，可对生成列表分开控制</li>
+    <li>**一键生成**: 一键完成所有文件的创建、路径引用、文件代码初始化</li>
+    <li>**自定义子命令**：用自定义的子命令单独生成单个文件task</li>
+    <li>**灵活迁移**：运行脱离于具体项目，仅依赖于配置文件</li>
 </ol>
 
 ##使用简介
@@ -33,7 +33,7 @@
     <li>config.js  ———模块配置文件</li>
     <li>tpl   ———模板文件夹</li>
 </ul>
-<p>**示例：** <code>https://github.com/strwind/egen/tree/master/demo/helloword</code> </p>
+<p>**示例**： <code>https://github.com/strwind/egen/tree/master/demo/helloword</code> </p>
 
 #####config配置文件
 <pre>
@@ -86,6 +86,7 @@ var config = {
             // html配置
             'index.html': {
                 'type': 'file',
+                'subCommand': 'addhtml',
                 'tplFrom': join(tplPath, 'tpl.html'),
                 'tplData': {
                     'cssPath': 'css/${moduleName}.css'
@@ -132,7 +133,6 @@ module.exports = exports = config;
         -demo.less
     -index.html
 </pre>
-
 
 
 ##### 使用自定义的子命令addcss
