@@ -1,5 +1,5 @@
 
-#EGEN —— Easy generator
+#EGEN —— easy generator
 该工具能让我们从开发时繁琐的文件创建、引用、配置中解放人力，把更多的精力关注到业务逻辑上
 
 ###该工具主要专注于下面三件事情
@@ -13,7 +13,7 @@
 <ol>
     <li>项目根目录下创建egenConfig文件夹</li>
     <li>egenConfig中配置config.js文件和所需模板文件</li>
-    <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量</li>
+    <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量，一般为模块名</li>
 </ol>
 
 ###灵活性高，支持自定义子命令
