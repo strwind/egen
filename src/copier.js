@@ -10,7 +10,7 @@ var path = require('path');
 
 /**
  * 深度复制类
- * @param {options} 初始参数
+ * @param {options} options 初始参数
  * @constructor
  */
 function Copier(options) {
@@ -47,7 +47,6 @@ Copier.prototype = {
             fs.mkdirSync(targetSrc);
         }
         // 读取目录中的所有文件/目录
-        //var sourceSrc = 'a';
         var dirs = fs.readdirSync(sourceSrc);
         dirs.forEach(function (dir, index) {
             var childSourceSrc = path.join(sourceSrc, dir);
