@@ -6,6 +6,7 @@
  */
 var fs = require('fs');
 var path = require('path');
+var copier = require('./copier');
 
 // 命令运行路径
 var currentPath = process.cwd();
@@ -17,7 +18,7 @@ var check = {
      */
     init: function (args) {
         if (!this.hasEgenConfig()) {
-            process.exit();
+            this.createCfgDir();
         }
     },
     /**
@@ -36,6 +37,16 @@ var check = {
             return false;
         }
         return true;
+    },
+    /**
+     * 创建默认的配置文件
+     * @private 
+     */
+    createCfgDir: function () {
+        var egenDir = path.dirname(path.dirname(process.argv[1]));
+        var defaultCfgPath = path.join(egenDir, 'demo/helloWorld/egenConfig');
+        var currentCfgPath = path.join(process.cwd(), 'egenConfig');
+        copier.init(defaultCfgPath, currentCfgPath);
     }
 };
 

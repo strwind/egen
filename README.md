@@ -17,9 +17,9 @@ egen能让我们从开发时繁琐的文件创建、引用、初始化代码中�
 
 ### 使用特点：
 <ol>
-    <li>*一键生成*: 一键完成所有文件的创建、路径引用、文件代码初始化</li>
-    <li>*自定义子命令*：用自定义的子命令单独生成单个文件task</li>
-    <li>*灵活迁移*：运行脱离于具体项目，仅依赖于配置文件</li>
+    <li>一键生成: 一键完成所有文件的创建、路径引用、文件代码初始化</li>
+    <li>自定义子命令：用自定义的子命令单独生成单个文件task</li>
+    <li>灵活迁移：运行脱离于具体项目，仅依赖于配置文件</li>
 </ol>
 
 ## 使用简介:
@@ -27,12 +27,12 @@ egen能让我们从开发时繁琐的文件创建、引用、初始化代码中�
 <code>npm install -g egen</code>
 
 ### 工具配置
-工具的配置文件在项目的根目录下*egenConfig*文件夹下面, 这个文件夹下需要自己去和写配置文件和模板文件
+工具的配置文件在项目的根目录下**egenConfig**文件夹下面, 这个文件夹下需要自己去和写配置文件和模板文件
 <ul>
     <li>config.js  ———模块配置文件</li>
     <li>tpl   ———模板文件夹</li>
 </ul>
-<p>*示例*： <code>https://github.com/strwind/egen/tree/master/demo/helloword</code> </p>
+<p>示例： <code>https://github.com/strwind/egen/tree/master/demo/helloWorld</code> </p>
 
 ##### config配置文件
     /**
@@ -121,11 +121,14 @@ egen能让我们从开发时繁琐的文件创建、引用、初始化代码中�
     };
     
     module.exports = exports = config;
-
+    
+##### **tpl文件夹**下的模板文件配置
+采用的是**etpl**模板解析引擎,
+    查看语法请猛点：<code>https://github.com/ecomfe/etpl</code>
 
 ### Quick Start
 
-##### 生成一个命名为*demo*的模块
+##### 生成一个命名为**demo**的模块
 
 在项目根目录下运行命令<code>egen demo</code>
 
