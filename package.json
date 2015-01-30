@@ -1,12 +1,12 @@
 {
     "name": "egen",
-    "version": "0.2.1",
+    "version": "0.2.4",
     "contributors": [
         { "name": "yaofeifei", "email": "gzzyyff@gmail.com" }
     ],
     "main": "main.js",
     "repository": "https://github.com/strwind/egen.git",
-    "description": "This is a generator of creating folders and files",
+    "description": "This is a generator about creating module's folders and files in the project",
     "dependencies": {
         "etpl": "*",
         "underscore": "*"
@@ -17,6 +17,7 @@
     "keywords": [
         "generator",
         "egen",
+        "baidu",
         "easy generator"
     ],
     "author": "yaofeifei",

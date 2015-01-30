@@ -77,8 +77,14 @@ var config = {
      */
     'handlers': {
         'success': function (status) {
+            // status = true 为成功
             if (status) {
-                console.log('good job!');
+                // TODO
+                // console.log('good job!');
+            }
+            // status = false 为失败
+            else {
+                // TODO
             }
         }
     }
