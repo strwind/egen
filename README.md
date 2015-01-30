@@ -26,14 +26,18 @@
 ### 安装
 <code>npm install -g egen</code>
 
-### 工具配置
+### 运行
+<code>egen xxx</code>  
+第一次运行时，项目根目录下如果没有所需的**egenConfig**配置文件夹，会默认生成一个初始的配置，您可以根据业务需求更改配置后使用
+
+### 配置
 工具的配置文件在项目的根目录下**egenConfig**文件夹下面, 这个文件夹下需要自己去和写配置文件和模板文件
 <ul>
     <li>config.js  ———模块配置文件</li>
     <li>tpl   ———模板文件夹</li>
 </ul>  
 
-示例：[https://github.com/strwind/egen/tree/master/demo/helloWorld](helloWorld)
+示例：https://github.com/strwind/egen/tree/master/demo/helloWorld
 
 ##### config配置文件
     /**
