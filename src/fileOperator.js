@@ -11,7 +11,7 @@ var util = require('./util');
 var tplParser = require('./tplParser');
 
 function FileOperator() {
-    /*
+    /**
      * 创建path的容器
      * @type {Object}
      */
@@ -19,7 +19,7 @@ function FileOperator() {
 }
 
 FileOperator.prototype = {
-    /*
+    /**
      * 生成单个文件
      * @param {string} filePath 写入目标文件路径
      * @param {string} tpl 模板文件路径
@@ -56,7 +56,7 @@ FileOperator.prototype = {
             });
         });
     },
-    /*
+    /**
      * 读取一个文件，以数组的形式返回，文件中的每一行为数组的一项
      * @param {string} filePath 文件路径
      * @param {Function} callback 回调函数
@@ -75,7 +75,7 @@ FileOperator.prototype = {
             callback(null, arr);
         });
     },
-    /*
+    /**
      * 确保创建了相应的目录
      * @param {string} dir
      * @param {Function} callback
@@ -91,7 +91,7 @@ FileOperator.prototype = {
             }
         });
     },
-    /*
+    /**
      * 确保创建了相应的文件
      * @param {string} dir
      * @param {Function} callback

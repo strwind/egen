@@ -9,7 +9,7 @@ var path = require('path');
 var fileOpr = require('./FileOperator');
 
 function PathRef() {
-    /*
+    /**
      * 添加path的容器
      * @type {Object}
      */
@@ -17,7 +17,7 @@ function PathRef() {
 }
 
 PathRef.prototype = {
-    /*
+    /**
      * 添加文件的引用路径
      * @param {string} target 目标路径
      * @param {string} content 要添加的内容
