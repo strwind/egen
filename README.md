@@ -37,7 +37,7 @@
     <li>tpl   ———模板文件夹</li>
 </ul>  
 
-示例：https://github.com/strwind/egen/tree/master/demo/helloWorld
+示例：[https://github.com/strwind/egen/tree/master/demo/helloWorld](https://github.com/strwind/egen/tree/master/demo/helloWorld)
 
 ##### config配置文件
     /**

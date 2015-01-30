@@ -29,7 +29,7 @@ var check = {
         var egenConfigPath = path.join(currentPath, 'egenConfig');
         var configFile = path.join(egenConfigPath, 'config.js');
         if (!fs.existsSync(egenConfigPath)) {
-            console.log('error：请在项目根目录配置egen运行所需的配置文件夹egenConfig\n可参考https://github.com/strwind/egen/demo/egenConfig');
+            //console.log('error：请在项目根目录配置egen运行所需的配置文件夹egenConfig\n可参考https://github.com/strwind/egen/tree/master/demo/helloWorld/egenConfig');
             return false;
         }
         if (!fs.existsSync(configFile)) {
