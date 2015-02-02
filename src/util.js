@@ -7,21 +7,6 @@
 
 var util = {
     /*
-     * 扩展对象
-     * @param {Object} ObjA
-     * @param {Object} ObjB
-     * @param {boolean=} force ObjB是否强行覆盖ObjA
-     * @return {Object} ObjA
-     */
-    extend: function (objA, objB, force) {
-        for (var key in objB) {
-            if (!objA.hasOwnProperty(key) || force) {
-                objB[key] && (objA[key] = objB[key]);
-            }
-        }
-        return objA;
-    },
-    /*
      * 让字符串首字母大写
      * @param {string} str
      * @return {string}

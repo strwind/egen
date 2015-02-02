@@ -51,7 +51,7 @@ FileOperator.prototype = {
                 if (err) {
                     throw err;
                 }
-                console.log('生成文件成功： ' + filePath);
+                console.log('生成文件成功：' + filePath);
                 callback(null);
             });
         });

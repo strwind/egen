@@ -196,6 +196,6 @@ var configManager = {
     }
 };
 
-util.extend(configManager, config);
+u.extend(configManager, config);
 
 module.exports = exports = configManager;

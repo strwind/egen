@@ -36,14 +36,14 @@ var config = {
      * 每个有type属性的对象， key名即文件名
      * @type {string} path： 文件路径
      * @type {string} type：文件类型
-     * @type {string} subCommand：子命令
+     * @type {string=} subCommand：子命令
      * @type {string} tplForm: 模板路径
-     * @type {Object} fileReference: 文件引用信息
-     * @type {string} fileReference.path： 文件引用路径
-     * @type {string} fileReference.content： 文件引用的内容
-     * @type {string} fileReference.line： 文件引用的行号
-     * @type {Object} tplData：私有模板配置数据
-     * @type {Function} callback: 回调函数，这里只配置函数的位置，具体的函数放在handlers中
+     * @type {Object=} fileReference: 文件引用信息
+     * @type {string=} fileReference.path： 文件引用路径
+     * @type {string=} fileReference.content： 文件引用的内容
+     * @type {number=} fileReference.line： 文件引用的行号
+     * @type {Object=} tplData：私有模板配置字典数据
+     * @type {Function=} callback: 回调函数，这里只配置函数的位置，具体的函数放在handlers中
      */
     'taskList': [
         //模块文件夹配置
@@ -58,7 +58,7 @@ var config = {
                 'tplData': {
                     'cssPath': 'css/${moduleName}.css'
                 },
-                'callback': 'config.handlers.success'
+                'callback': 'config.handlers.indexDone'
             },
             // css文件夹配置
             'css': {
@@ -66,9 +66,12 @@ var config = {
                 'subCommand': 'addcss',
                 '${moduleName}.css': {
                     'type': 'file',
-                    'tplFrom': join(tplPath, 'css.css')
-                }
+                    'tplFrom': join(tplPath, 'css.css'),
+                    'callback': 'config.handlers.cssDone'
+                },
+                'callback': 'config.handlers.cssFolderDone'
             },
+            'callback': 'config.handlers.moduleFolderDone'
         }
     ],
     
@@ -76,16 +79,18 @@ var config = {
      * 处理函数集合（可选）
      */
     'handlers': {
-        'success': function (status) {
-            // status = true 为成功
-            if (status) {
-                // TODO
-                // console.log('good job!');
-            }
-            // status = false 为失败
-            else {
-                // TODO
-            }
+        // status=true为成功,status=false为失败
+        'moduleFolderDone': function (status) {
+            console.log('module\'s folder done!');
+        },
+        'cssFolderDone': function (status) {
+            console.log('css\'s folder done!');
+        },
+        'indexDone': function (status) {
+            console.log('html done!');
+        },
+        'cssDone': function (status) {
+            console.log('css done!');
         }
     }
 };
