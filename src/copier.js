@@ -25,7 +25,6 @@ Copier.prototype = {
      * @public
      */
     init: function (sourceSrc, targetSrc) {
-        console.log('\n正在初始化egenConfig配置文件...\n');
         var stat = fs.lstatSync(sourceSrc);
         if (stat.isFile()) {
             this.copyFile(sourceSrc, targetSrc);
@@ -33,7 +32,6 @@ Copier.prototype = {
         else if (stat.isDirectory()) {
             this.copyDir(sourceSrc, targetSrc);
         }
-        console.log('初始化egenConfig完成,请根据业务需求修改使用,下面生成初始配置的页面：\n');
     },
     /**
      * 深度复制文件夹

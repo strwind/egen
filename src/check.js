@@ -18,7 +18,14 @@ var check = {
      */
     init: function (args) {
         if (!this.hasEgenConfig()) {
+            console.log('\n正在初始化egenConfig配置文件...\n');
             this.createCfgDir();
+            console.log('初始化egenConfig完成,请根据业务需求修改使用\n');
+            var dirArr = fs.readdirSync(currentPath);
+            if (dirArr.length !== 1) {
+                process.exit();
+            }
+            console.log('下面生成初始配置的页面：\n');
         }
     },
     /**
