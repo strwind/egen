@@ -53,7 +53,14 @@ Generator.prototype = {
                         };
                     }
                     var data = cfgMgr.getTplData(item.tplData);
-                    this.createFile(item.path, item.tplFrom, data, callback);
+                    //异步模式生成时
+                    if (!cfgMgr.sync) {
+                        fileOpr.createFile(item.path, item.tplFrom, data, callback);
+                    }
+                    else {
+                         fileOpr.createFileSync(item.path, item.tplFrom, data);
+                         callback();
+                    }
                 }
                 this.gen(item);
             }
@@ -61,22 +68,6 @@ Generator.prototype = {
                 this.gen(item);
             }
         }, this);
-    },
-    /*
-     * 生成单个文件
-     * @param {string} filePath 写入目标文件路径
-     * @param {string} tpl 模板文件路径
-     * @param {string} parseData 替换模板中变量的数据对象
-     * @param {Function} callback 回调函数
-     * @public
-     */
-    createFile: function (fileLocation, tplLocation, parseData, callback) {
-        fileOpr.createFile(fileLocation, tplLocation, parseData, function (err) {
-            if (err) {
-                throw err;
-            }
-            callback && callback(true);
-        });
     }
 };
 

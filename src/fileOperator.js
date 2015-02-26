@@ -52,10 +52,38 @@ FileOperator.prototype = {
                     throw err;
                 }
                 console.log('生成文件成功：' + filePath);
-                callback(null);
+                callback(true);
             });
         });
     },
+    
+    /**
+     * 生成单个文件的同步接口
+     * @param {string} filePath 写入目标文件路径
+     * @param {string} tpl 模板文件路径
+     * @param {string} parseData 替换模板中变量的数据对象
+     * @public
+     */
+    createFileSync: function (filePath, tpl, parseData) {
+        var me = this;
+        if (fs.existsSync(filePath)) {
+            console.log('文件已存在：' + filePath);
+            return;
+        }
+        if (me.container[filePath]) {
+            return;
+        }
+        me.container[filePath] = 1;
+        var option = {
+            'encoding': 'utf8'
+        };
+        var content = fs.readFileSync(tpl, option);
+        content = tplParser.compile(content, parseData);
+        me.insureFile(filePath);
+        fs.writeFileSync(filePath, content);
+        console.log('生成文件成功：' + filePath);
+    },
+    
     /**
      * 读取一个文件，以数组的形式返回，文件中的每一行为数组的一项
      * @param {string} filePath 文件路径

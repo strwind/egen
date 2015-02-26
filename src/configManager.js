@@ -15,6 +15,13 @@ var reSubCommand = /^-{1,2}(\w+)\s*/;
 
 var configManager = {
     /**
+     * 生成文件的时候是否为同步模式
+     * @type {boolean}
+     * @public
+     */
+    sync: true,
+    
+    /**
      * 子命令列表
      * @type {Array}
      * @public
@@ -146,6 +153,11 @@ var configManager = {
             else if (/Args/.test(value)) {
                 var number = /Args(\w+)/.exec(value)[1];
                 map[key] = util.toUpperCase(args[number - 1]);
+            }
+            // 需要字母全部大写的情况
+            else if (/ARGS/.test(value)) {
+                var number = /ARGS(\w+)/.exec(value)[1];
+                map[key] = args[number - 1].toUpperCase();
             }
         });
         return map;
