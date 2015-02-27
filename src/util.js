@@ -92,7 +92,6 @@ var util = {
                 if (typeof replacer === 'function') {
                     replacer = replacer(key);
                 }
-
                 return replacer == null ? '' : replacer;
             }
         );

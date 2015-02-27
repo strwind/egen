@@ -4,12 +4,10 @@
  * @author yaofeifei(yaofeifei@baidu.com)
  * @date 2014-10-30
  */
+var u = require('underscore');
 var etpl = require('etpl');
+var cfgMgr = require('./configManager');
 
-etpl.config({
-    commandOpen: '<%',
-    commandClose: '%>'
-});
 /**
  * 模板解析接口类
  * @param {Object} options 初始化参数
@@ -17,6 +15,13 @@ etpl.config({
  */
 function TplParser (options) {
     this.options = options;
+    var defaultSetting = {
+        'commandOpen': '<%',
+        'commandClose': '%>',
+        'variableOpen': '${',
+        'variableClose': '}'
+    };
+    etpl.config(u.extend(defaultSetting, cfgMgr.etplSetting));
 }
 
 TplParser.prototype = {
