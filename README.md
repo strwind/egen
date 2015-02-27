@@ -175,11 +175,13 @@
 ##### **tpl文件夹**下的模板文件配置
 采用的是**etpl**模板解析引擎，
     查看语法请猛点：[https://github.com/ecomfe/etpl](https://github.com/ecomfe/etpl)
+    
     其中唯一差别是，命令和变量的包裹默认符号不同
-    'commandOpen': '<%'
-    'commandClose': '%>'
-    'variableOpen': '${'
-    'variableClose': '}'
+    
+    commandOpen: '<%'
+    commandClose: '%>'
+    variableOpen: '${'
+    variableClose: '}'
 
 ### Quick Start
 
