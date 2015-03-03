@@ -14,11 +14,13 @@ var help = {
             'egen -- easy generator',
             '',
             '使用仅需三步：',
-            '    1、项目根目录下创建egenConfig文件夹',
-            '    2、egenConfig中配置config.js文件和所需模板文件',
+            '    1、项目根目录下创建egen-config.js文件',
+            '    2、创建件egen模板文件夹（默认为egenTpl）及其模板文件',
             '    3、根目录下运行egen xxx',
             '',
-            '详情可参考：https://github.com/strwind/egen/tree/master/demo/helloword'
+            '可以运行 --init 子命令，生成一个默认的配置',
+            '',
+            '详情可参考：https://github.com/strwind/egen/tree/master/demo/helloWorld'
         ];
         console.log(content.join('\n'));
     },

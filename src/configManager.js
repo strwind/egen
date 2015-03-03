@@ -9,7 +9,7 @@ var path = require('path');
 var u = require('underscore');
 var util = require('./util');
 
-var configPath = path.join(process.cwd(), '/egenConfig/config');
+var configPath = path.join(process.cwd(), 'egen-config');
 var config = require(configPath);
 var reSubCommand = /^-{1,2}(\w+)\s*/;
 

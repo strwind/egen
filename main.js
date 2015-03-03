@@ -19,14 +19,16 @@ exports.parse = function (args) {
         help.defaultInfo();
         return;
     }
-
+    
     // 显示版本信息
     if (args[0] === '--version' || args[0] === '-v') {
         help.dumpVersion();
         return;
     }
+    
     // 检查配置和运行环境
     require('./src/check').init(args);
+    
     // 生成器入口
     require('./src/generator').init(args);
 };

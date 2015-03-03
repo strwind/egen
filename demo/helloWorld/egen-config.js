@@ -7,7 +7,7 @@
 var path = require('path');
 var cwd = process.cwd();
 var join = path.join;
-var tplPath = join(cwd, 'egenConfig/tpl');
+var tplPath = join(cwd, 'egenTpl');
 
 var config = {
     /**
@@ -35,11 +35,11 @@ var config = {
         'moduleName': '${moduleName}',
         'ModuleName': '${ModuleName}',
         'MODULENAME': '${MODULENAME}',
-        'customVar': '${moduleName}—${ModuleName}—${MODULENAME}~随意组合%（）&*（%￥%'
+        'customVar': '${moduleName}—${ModuleName}—${MODULENAME}~随意组合'
     },
     
     /**
-     * 模板的变量设置，egen采用的是etpl模板引擎 (可选)
+     * 模板的变量起始串设置，egen采用的是etpl模板引擎 (可选)
      * 为了解决egen的变量与模板代码中的变量冲突
      * 默认设置为：
      * commandOpen': <%

@@ -18,42 +18,64 @@ var check = {
      */
     init: function (args) {
         if (!this.hasEgenConfig()) {
-            console.log('\n正在初始化egenConfig配置文件...\n');
-            this.createCfgDir();
-            console.log('初始化egenConfig完成,请根据业务需求修改使用\n');
+            console.log('\n正在初始化egen配置文件...\n');
+            this.createConfig();
+            this.createTplDir();
+            console.log('初始化egen配置完成,请根据业务需求修改使用\n');
             var dirArr = fs.readdirSync(currentPath);
-            if (dirArr.length !== 1) {
+            if (dirArr.length !== 2 || args[0] === '--init') {
                 process.exit();
             }
             console.log('下面生成初始配置的页面：\n');
         }
+        else if (args[0] === '--init') {
+            console.log('egen-config.js已经存在!\n');
+        }
     },
     /**
-     * 是否有配置文件夹
+     * 是否有配置文件
      * @return {boolean}
      */
     hasEgenConfig: function () {
-        var egenConfigPath = path.join(currentPath, 'egenConfig');
-        var configFile = path.join(egenConfigPath, 'config.js');
-        if (!fs.existsSync(egenConfigPath)) {
-            //console.log('error：请在项目根目录配置egen运行所需的配置文件夹egenConfig\n可参考https://github.com/strwind/egen/tree/master/demo/helloWorld/egenConfig');
-            return false;
-        }
+        var configFile = path.join(currentPath, 'egen-config.js');
         if (!fs.existsSync(configFile)) {
-            console.log('error：请在项目根目录egenConfig文件夹中配置config.js文件!');
             return false;
         }
         return true;
     },
+    
+    /**
+     * 是否有配置模板文件夹
+     * @return {boolean}
+     */
+    hasEgenTpl: function () {
+        var egenTplPath = path.join(currentPath, 'egenTpl');
+        if (!fs.existsSync(egenTplPath)) {
+            return false;
+        }
+        return true;
+    },
+    
     /**
      * 创建默认的配置文件
      * @private 
      */
-    createCfgDir: function () {
+    createConfig: function () {
         var egenDir = path.dirname(path.dirname(process.argv[1]));
-        var defaultCfgPath = path.join(egenDir, 'demo/helloWorld/egenConfig');
-        var currentCfgPath = path.join(process.cwd(), 'egenConfig');
+        var defaultCfgPath = path.join(egenDir, 'demo/helloWorld/egen-config.js');
+        var currentCfgPath = path.join(process.cwd(), 'egen-config.js');
         copier.init(defaultCfgPath, currentCfgPath);
+    },
+    
+    /**
+     * 创建默认的配置模板文件夹
+     * @private 
+     */
+    createTplDir: function () {
+        var egenDir = path.dirname(path.dirname(process.argv[1]));
+        var defaultTplPath = path.join(egenDir, 'demo/helloWorld/egenTpl');
+        var currentTplPath = path.join(process.cwd(), 'egenTpl');
+        copier.init(defaultTplPath, currentTplPath);
     }
 };
 

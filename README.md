@@ -10,10 +10,12 @@
 
 ### 使用简单：仅需三步
 <ol>
-    <li>项目根目录下创建egenConfig文件夹</li>
-    <li>egenConfig中配置config.js文件和所需模板文件</li>
-    <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量，一般为模块名</li>
+    <li>项目根目录下创建egen-config.js文件</li>
+    <li>创建件egen模板文件夹（默认为egenTpl）及其模板文件</li>
+    <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量，一般为生成的文件名或模块名</li>
 </ol>
+
+捷径：在文件夹下初始运行<code>$egen --init</code>，会默认生成一个helloWorld的配置，修改使用即可 
 
 ### 使用特点：
 <ol>
@@ -28,13 +30,13 @@
 
 ### 运行
 <code>egen xxx</code>  
-第一次运行时，项目根目录下如果没有所需的**egenConfig**配置文件夹，会默认生成一个初始的配置，您可以根据业务需求更改配置后使用
+第一次运行时，项目根目录下如果没有所需的**egen-config.js**配置文件，会默认生成一个初始的配置，您可以根据业务需求更改配置后使用
 
 ### 配置
-工具的配置文件在项目的根目录下**egenConfig**文件夹下面, 这个文件夹下需要自己去和写配置文件和模板文件
+工具的配置文件在项目的根目录下面, 这个文件夹下需要自己去和写配置文件和模板文件
 <ul>
-    <li>config.js  ———模块配置文件</li>
-    <li>tpl   ———模板文件夹</li>
+    <li>egen-config.js  ———配置文件</li>
+    <li>egenTpl   ———模板文件夹，可以更改名字及目录，只需要在config中重新指定即可</li>
 </ul>  
 
 示例：[https://github.com/strwind/egen/tree/master/demo/helloWorld](https://github.com/strwind/egen/tree/master/demo/helloWorld)
@@ -49,7 +51,7 @@
     var path = require('path');
     var cwd = process.cwd();
     var join = path.join;
-    var tplPath = join(cwd, 'egenConfig/tpl');
+    var tplPath = join(cwd, 'egenTpl');
     
     var config = {
         /**
@@ -77,11 +79,11 @@
             'moduleName': '${moduleName}',
             'ModuleName': '${ModuleName}',
             'MODULENAME': '${MODULENAME}',
-            'customVar': '${moduleName}—${ModuleName}—${MODULENAME}~随意组合%（）&*（%￥%'
+            'customVar': '${moduleName}—${ModuleName}—${MODULENAME}~随意组合'
         },
         
         /**
-         * 模板的变量设置，egen采用的是etpl模板引擎 (可选)
+         * 模板的变量起始串设置，egen采用的是etpl模板引擎 (可选)
          * 为了解决egen的变量与模板代码中的变量冲突
          * 默认设置为：
          * commandOpen': <%
@@ -176,8 +178,7 @@
 采用的是**etpl**模板解析引擎，
     查看语法请猛点：[https://github.com/ecomfe/etpl](https://github.com/ecomfe/etpl)
     
-    其中唯一差别是，命令和变量的包裹默认符号不同
-    
+    其中唯一差别是，命令和变量的语法起始串默认符号不同
     commandOpen: '<%'
     commandClose: '%>'
     variableOpen: '${'
@@ -195,6 +196,8 @@
     -css
         -index.less
 -dep
+-egenTpl
+-egen-config.js
 -index.html
 </pre>
 
