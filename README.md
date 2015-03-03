@@ -9,13 +9,13 @@
 </ol>
 
 ### 使用简单：仅需三步
+捷径：在文件夹下初始运行<code>$ egen --init</code>，会默认生成一个helloWorld的配置，修改使用即可 
 <ol>
     <li>项目根目录下创建egen-config.js文件</li>
     <li>创建件egen模板文件夹（默认为egenTpl）及其模板文件</li>
-    <li>根目录下运行egen xxx， xxx为配置中的需要从命令行输入的变量，一般为生成的文件名或模块名</li>
+    <li>根目录下运行<code>$ egen xxx</code>， xxx为配置中的需要从命令行输入的变量，一般为生成的文件名或模块名</li>
 </ol>
 
-捷径：在文件夹下初始运行<code>$egen --init</code>，会默认生成一个helloWorld的配置，修改使用即可 
 
 ### 使用特点：
 <ol>
@@ -26,10 +26,10 @@
 
 ## 使用简介:
 ### 安装
-<code>npm install -g egen</code>
+<code>$ npm install -g egen</code>
 
 ### 运行
-<code>egen xxx</code>  
+<code>$ egen xxx</code>  
 第一次运行时，项目根目录下如果没有所需的**egen-config.js**配置文件，会默认生成一个初始的配置，您可以根据业务需求更改配置后使用
 
 ### 配置
@@ -188,7 +188,7 @@
 
 ##### 生成一个命名为**index**的模块
 
-在项目根目录下运行命令<code>egen index</code>
+在项目根目录下运行命令<code>$ egen index</code>
 
 *result:*
 <pre>
@@ -203,7 +203,7 @@
 
 ##### 使用自定义的子命令addcss
 
-在项目根目录下运行命令<code>egen -addcss demo</code>
+在项目根目录下运行命令<code>$ egen -addcss demo</code>
 
 *result:*
 <pre>
