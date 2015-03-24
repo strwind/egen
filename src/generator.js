@@ -6,6 +6,7 @@
  */
 var path = require('path');
 var u = require('underscore');
+var util = require('./util');
 var cfgMgr = require('./configManager');
 var fileOpr = require('./fileOperator');
 var pathRef = require('./pathRef');
@@ -32,34 +33,40 @@ Generator.prototype = {
     },
     /**
      * 生成任务处理函数
-     * @param {Array|Object} tasks 任务列表或者任务对象
+     * @param {Array|Object} parent 任务列表或者任务对象
      * @public
      */
-    gen: function (tasks) {
-        u.each(tasks, function (item, key) {
-            if (u.isObject(item)) {
-                var success = item.callback;
+    gen: function (parent) {
+        u.each(parent, function (item, key) {
+            if (util.isObject(item)) {
                 if (item.type === 'folder') {
-                    fileOpr.insureDir(item.path, success);
+                    fileOpr.insureDir(item.path);
+                    item.callback && item.callback(true);
                 }
                 else if (item.type === 'file') {
-                    var callback = function () {
-                        success && success(true);
+                    var doneHander = function () {
+                        item.callback && item.callback(true);
                     };
                     var ref = item.fileReference;
                     if (ref) {
-                        callback = function () {
-                            pathRef.addRef(ref.path, ref.content, ref.line, success);
+                        doneHander = function () {
+                            if (!cfgMgr.sync) {
+                                pathRef.addRef(ref.path, ref.content, ref.line, item.callback);
+                            }
+                            else {
+                                pathRef.addRefSync(ref.path, ref.content, ref.line);
+                                item.callback && item.callback(true);
+                            }
                         };
                     }
                     var data = cfgMgr.getTplData(item.tplData);
-                    //异步模式生成时
+                    // 异步模式生成时
                     if (!cfgMgr.sync) {
-                        fileOpr.createFile(item.path, item.tplFrom, data, callback);
+                        fileOpr.createFile(item.path, item.tplFrom, data, doneHander);
                     }
                     else {
-                         fileOpr.createFileSync(item.path, item.tplFrom, data);
-                         callback();
+                        fileOpr.createFileSync(item.path, item.tplFrom, data);
+                        doneHander();
                     }
                 }
                 this.gen(item);

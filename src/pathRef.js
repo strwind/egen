@@ -52,6 +52,35 @@ PathRef.prototype = {
                 callback && callback(true);
             });
         });
+    },
+    
+    /**
+     * addRef的同步方式
+     * 添加文件的引用路径
+     * @param {string} target 目标路径
+     * @param {string} content 要添加的内容
+     * @param {number} line 行号
+     * @public
+     */
+    addRefSync: function (target, content, line) {
+        var me = this;
+        fileOpr.insureFile(target);
+        var dataArr = fileOpr.readFileByArraySync(target);
+        if (dataArr.indexOf(content) !== -1
+            || me.container[content]) {
+            return;
+        }
+        me.container[content] = 1;
+        if (line < 0) {
+            line = dataArr.length + (line + 1);
+        }
+        else {
+            line -= 1;
+        }
+        dataArr.splice(line, 0, content);
+        fs.writeFileSync(target, dataArr.join('\n'));
+        var showNum = (line > 0) ? line + 1 : 1;
+        console.log('添加路径成功, 在文件%s中第%s行', target, showNum);
     }
 };
 var pathRef = new PathRef();

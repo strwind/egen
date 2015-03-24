@@ -103,19 +103,31 @@ FileOperator.prototype = {
             callback(null, arr);
         });
     },
+    
+    /**
+     * readFileByArray的同步方式
+     * 读取一个文件，以数组的形式返回，文件中的每一行为数组的一项
+     * @param {string} filePath 文件路径
+     * @public
+     */
+    readFileByArraySync: function (filePath, callback) {
+        var option = {
+            'encoding': 'utf8'
+        };
+        var data = fs.readFileSync(filePath, option);
+        var arr = data.split('\n');
+        return util.trimArrayEnd(arr);
+    },
+    
     /**
      * 确保创建了相应的目录
      * @param {string} dir
-     * @param {Function} callback
      */
-    insureDir: function (dir, callback) {
+    insureDir: function (dir) {
         var dirList = this.getDeepDirList(dir);
         u.each(dirList, function (single, index) {
             if (!fs.existsSync(single)) {
                 fs.mkdirSync(single);
-            }
-            if (index >= dirList.length - 1 && callback) {
-                callback(true);
             }
         });
     },

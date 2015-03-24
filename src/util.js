@@ -4,7 +4,6 @@
  * @author yaofeifei(yaofeifei@baidu.com)
  * @date 2014-10-30
  */
-
 var util = {
     /*
      * 让字符串首字母大写
@@ -95,6 +94,13 @@ var util = {
                 return replacer == null ? '' : replacer;
             }
         );
+    },
+    /**
+     * 判断一个对象是否为Object的一级实例
+     * @param {Object} obj 需要检测的参数
+     */
+    isObject: function (obj) {
+        return Object.prototype.toString.call(obj).slice(8, -1) === 'Object';
     }
 };
 module.exports = exports = util;

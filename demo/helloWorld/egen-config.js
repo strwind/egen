@@ -2,7 +2,7 @@
 /**
  * @file 模块信息配置
  * @author yaofeifei(yaofeifei@baidu.com）
- * @date 2014-10-30 
+ * @date 2014-10-30
  */
 var path = require('path');
 var cwd = process.cwd();
@@ -21,7 +21,6 @@ var config = {
         '${ModuleName}': 'Args1',
         '${MODULENAME}': 'ARGS1'
     },
-    
     /**
      * 模板变量替换字典（可选）
      * 模板变量与配置变量的区别：
@@ -37,7 +36,6 @@ var config = {
         'MODULENAME': '${MODULENAME}',
         'customVar': '${moduleName}—${ModuleName}—${MODULENAME}~随意组合'
     },
-    
     /**
      * 模板的变量起始串设置，egen采用的是etpl模板引擎 (可选)
      * 为了解决egen的变量与模板代码中的变量冲突
@@ -53,7 +51,6 @@ var config = {
         'variableOpen': '$${',
         'variableClose': '}'
     },
-    
     /**
      * 生成任务list
      * 每个有type属性的对象， key名即文件名
@@ -104,7 +101,6 @@ var config = {
             'callback': 'config.handlers.htmlDone'
         }
     ],
-    
     /**
      * 处理函数集合（可选）
      */

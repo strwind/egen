@@ -165,6 +165,7 @@ var configManager = {
     /**
      * 添加path属性,深度添加
      * @param {Object} task 需要添加path的对象
+     * @return {Object} 返回该对象
      */
     addPath: function (task) {
         u.each(task, function (item, key) {
