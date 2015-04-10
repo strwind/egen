@@ -1,12 +1,12 @@
 {
     "name": "egen",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "contributors": [
         { "name": "yaofeifei", "email": "gzzyyff@gmail.com" }
     ],
     "main": "main.js",
     "repository": "https://github.com/strwind/egen.git",
-    "description": "This is a generator about creating module's folders and files in the project",
+    "description": "A common and easy generator of creating folders and files",
     "dependencies": {
         "etpl": "*",
         "underscore": "*"
