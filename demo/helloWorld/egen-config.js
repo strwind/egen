@@ -76,7 +76,7 @@ var config = {
                 'subCommand': 'addcss',
                 '${moduleName}.css': {
                     'type': 'file',
-                    'tplFrom': join(tplPath, 'css.css'),
+                    'tplFrom': join(tplPath, 'default.css'),
                     'callback': 'config.handlers.cssDone'
                 },
                 'callback': 'config.handlers.cssFolderDone'

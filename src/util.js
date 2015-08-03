@@ -101,6 +101,13 @@ var util = {
      */
     isObject: function (obj) {
         return Object.prototype.toString.call(obj).slice(8, -1) === 'Object';
+    },
+    /**
+     * 判断一个对象是否为Array的一级实例
+     * @param {Array} arr 需要检测的参数
+     */
+    isArray: function (arr) {
+        return Object.prototype.toString.call(arr).slice(8, -1) === 'Array';
     }
 };
 module.exports = exports = util;

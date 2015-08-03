@@ -39,17 +39,14 @@ Generator.prototype = {
     gen: function (parent) {
         u.each(parent, function (item, key) {
             if (util.isObject(item)) {
-                if (item.type === 'folder') {
-                    fileOpr.insureDir(item.path);
+                var doneHander = function () {
                     item.callback && item.callback(true);
-                }
-                else if (item.type === 'file') {
-                    var doneHander = function () {
-                        item.callback && item.callback(true);
-                    };
-                    var ref = item.fileReference;
-                    if (ref) {
-                        doneHander = function () {
+                };
+                var refs = item.fileReference;
+                refs = util.isArray(refs) ? refs : [refs];
+                if (refs[0]) {
+                    doneHander = function () {
+                        refs.forEach(function (ref, index) {
                             if (!cfgMgr.sync) {
                                 pathRef.addRef(ref.path, ref.content, ref.line, item.callback);
                             }
@@ -57,8 +54,14 @@ Generator.prototype = {
                                 pathRef.addRefSync(ref.path, ref.content, ref.line);
                                 item.callback && item.callback(true);
                             }
-                        };
-                    }
+                        });
+                    };
+                }
+                if (item.type === 'folder') {
+                    fileOpr.insureDir(item.path);
+                    doneHander();
+                }
+                else if (item.type === 'file') {
                     var data = cfgMgr.getTplData(item.tplData);
                     // 异步模式生成时
                     if (!cfgMgr.sync) {
